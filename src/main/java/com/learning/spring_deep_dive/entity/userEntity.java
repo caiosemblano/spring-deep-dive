@@ -7,11 +7,13 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.BeanUtils;
 
+import java.util.Objects;
+
 @Setter
 @Getter
 @Entity
 @Table(name="SDD_USER")
-public class user {
+public class userEntity {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
@@ -28,13 +30,22 @@ public class user {
     @Column(nullable=false,  unique=true)
     private String login;
 
-    public user (userDTO userDTO) {
+    public userEntity(userDTO userDTO) {
         BeanUtils.copyProperties(userDTO,this);
     }
 
-    public user() {
+    public userEntity() {
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        userEntity that = (userEntity) o;
+        return Objects.equals(id, that.id);
+    }
 
-
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
 }
