@@ -1,7 +1,7 @@
 package com.learning.spring_deep_dive.entity;
 
 
-import com.learning.spring_deep_dive.dto.userDTO;
+import com.learning.spring_deep_dive.dto.UserDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +13,7 @@ import java.util.Objects;
 @Getter
 @Entity
 @Table(name="SDD_USER")
-public class userEntity {
+public class UserEntity {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
@@ -30,17 +30,17 @@ public class userEntity {
     @Column(nullable=false,  unique=true)
     private String login;
 
-    public userEntity(userDTO userDTO) {
+    public UserEntity(UserDTO userDTO) {
         BeanUtils.copyProperties(userDTO,this);
     }
 
-    public userEntity() {
+    public UserEntity() {
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        userEntity that = (userEntity) o;
+        UserEntity that = (UserEntity) o;
         return Objects.equals(id, that.id);
     }
 
