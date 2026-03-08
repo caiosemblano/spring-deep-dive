@@ -10,11 +10,11 @@ import org.springframework.beans.BeanUtils;
 @Setter
 @Getter
 @Entity
-@Table(name="user")
+@Table(name="SDD_USER")
 public class user {
     @Id
-    @GeneratedValue(strategy= GenerationType.UUID)
-    private long id;
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private Long id;
 
     @Column(nullable=false)
     private String name;
