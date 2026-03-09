@@ -13,23 +13,23 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public List<UserDTO> GetAllUsers() {
+    public List<UserDTO> getAllUsers() {
         List<UserEntity> users = userRepository.findAll();
         return users.stream().map(UserDTO::new).toList();
     }
 
-    public void InsertUser(UserDTO userDTO) {
+    public void insertUser(UserDTO userDTO) {
         UserEntity userEntity = new UserEntity(userDTO);
         userRepository.save(userEntity);
     }
 
-    public UserDTO UpdateUser(UserDTO userDTO) {
+    public UserDTO updateUser(UserDTO userDTO) {
         UserEntity userEntity = new UserEntity(userDTO);
         userRepository.save(userEntity);
         return userDTO;
     }
 
-    public void DeleteUser(Long id) {
+    public void deleteUser(Long id) {
         UserEntity user = userRepository.findById(id).get();
         userRepository.delete(user);
     }
