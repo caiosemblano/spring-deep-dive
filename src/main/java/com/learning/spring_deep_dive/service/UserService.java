@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Objects;
 
 @Service
 public class UserService {
@@ -17,7 +19,7 @@ public class UserService {
         List<UserEntity> users = userRepository.findAll();
         return users.stream().map(UserDTO::new).toList();
     }
-
+    
     public void insertUser(UserDTO userDTO) {
         UserEntity userEntity = new UserEntity(userDTO);
         userRepository.save(userEntity);
@@ -30,7 +32,8 @@ public class UserService {
     }
 
     public void deleteUser(Long id) {
-        UserEntity user = userRepository.findById(id).get();
+        UserEntity user = Objects.requireNonNull(userRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("User not found with id: " + id)));
         userRepository.delete(user);
     }
 
