@@ -2,7 +2,6 @@ package com.learning.spring_deep_dive.controller;
 
 import com.learning.spring_deep_dive.dto.UserDTO;
 import com.learning.spring_deep_dive.service.UserService;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,12 +21,12 @@ public class UserController {
     }
 
     @PostMapping
-    public void insertUser(UserDTO userDTO) {
+    public void insertUser(@RequestBody UserDTO userDTO) {
         userService.insertUser(userDTO);
     }
 
     @PutMapping
-    public UserDTO updateUser(UserDTO userDTO) {
+    public ResponseEntity<UserDTO> updateUser(@RequestBody ResponseEntity<UserDTO> userDTO) {
         return userService.updateUser(userDTO);
     }
 

@@ -3,14 +3,12 @@ package com.learning.spring_deep_dive.entity;
 
 import com.learning.spring_deep_dive.dto.UserDTO;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import org.springframework.beans.BeanUtils;
 
 import java.util.Objects;
 
-@Setter
-@Getter
+@Data
 @Entity
 @Table(name="SDD_USER")
 public class UserEntity {

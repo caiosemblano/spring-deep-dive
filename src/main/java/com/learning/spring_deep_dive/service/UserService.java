@@ -4,6 +4,7 @@ import com.learning.spring_deep_dive.dto.UserDTO;
 import com.learning.spring_deep_dive.entity.UserEntity;
 import com.learning.spring_deep_dive.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,12 +22,16 @@ public class UserService {
     }
     
     public void insertUser(UserDTO userDTO) {
-        UserEntity userEntity = new UserEntity(userDTO);
+        UserEntity userEntity = new UserEntity();
+        userEntity.setName(userDTO.getName());
+        userEntity.setEmail(userDTO.getEmail());
+        userEntity.setLogin(userDTO.getLogin());
+        userEntity.setPassword(userDTO.getPassword());
         userRepository.save(userEntity);
     }
 
-    public UserDTO updateUser(UserDTO userDTO) {
-        UserEntity userEntity = new UserEntity(userDTO);
+    public ResponseEntity<UserDTO> updateUser(ResponseEntity<UserDTO> userDTO) {
+        UserEntity userEntity = new UserEntity(userDTO.getBody());
         userRepository.save(userEntity);
         return userDTO;
     }
