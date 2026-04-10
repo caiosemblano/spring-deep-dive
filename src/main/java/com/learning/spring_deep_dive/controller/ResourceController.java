@@ -26,6 +26,12 @@ public class ResourceController {
         return resourceDTO;
     }
 
+    @PutMapping
+    public ResourceDTO updateResource(@RequestBody ResourceDTO resourceDTO) {
+        return resourceService.updateResource(resourceDTO);
+    }
+t
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteResource(@PathVariable("id") Long id) {
         resourceService.deleteResource(id);
