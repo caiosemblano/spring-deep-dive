@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Objects;
 
 @Service
 public class UserService {
@@ -37,12 +36,14 @@ public class UserService {
     }
 
     public void deleteUser(Long id) {
-        UserEntity user = Objects.requireNonNull(userRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("User not found with id: " + id)));
+        UserEntity user = userRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("User not found with id: " + id));
         userRepository.delete(user);
     }
 
     public UserDTO getUserById(Long id) {
-        return new UserDTO(userRepository.findById(id).get());
+        UserEntity user = userRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("User not found with id: " + id));
+        return new UserDTO(user);
     }
 }
