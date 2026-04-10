@@ -13,7 +13,7 @@ public class ResourceService {
     @Autowired
     private ResourceRepository resourceRepository;
 
-    public List<ResourceDTO> listAllResources() {
+    public List<ResourceDTO> getAllResources() {
         List<ResourceEntity> resources = resourceRepository.findAll();
         return resources.stream().map(ResourceDTO::new).toList();
     }
@@ -34,12 +34,6 @@ public class ResourceService {
     }
 
     public ResourceDTO getResourceById(Long id) {
-        ResourceEntity resourceEntity = resourceRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Resource not found with id: " + id));
-        return new ResourceDTO(resourceEntity);
-    }
-
-    public ResourceDTO getResourceByChave(Long id) {
         ResourceEntity resourceEntity = resourceRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Resource not found with id: " + id));
         return new ResourceDTO(resourceEntity);

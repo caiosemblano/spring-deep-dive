@@ -16,8 +16,8 @@ public class ResourceController {
     ResourceService resourceService;
 
     @GetMapping
-    public List<ResourceDTO> listAllResources() {
-        return resourceService.listAllResources();
+    public List<ResourceDTO> getAllResources() {
+        return resourceService.getAllResources();
     }
 
     @PostMapping
