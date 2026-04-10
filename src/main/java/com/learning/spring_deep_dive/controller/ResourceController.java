@@ -30,7 +30,7 @@ public class ResourceController {
     public ResourceDTO updateResource(@RequestBody ResourceDTO resourceDTO) {
         return resourceService.updateResource(resourceDTO);
     }
-t
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteResource(@PathVariable("id") Long id) {
