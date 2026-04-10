@@ -13,8 +13,8 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ResourceDTO {
     private Long id;
-    private String nome;
-    private String chave;
+    private String name;
+    private String key;
 
 
     public ResourceDTO(ResourceEntity resourceEntity) {
