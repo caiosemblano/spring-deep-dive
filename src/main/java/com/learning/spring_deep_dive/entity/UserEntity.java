@@ -25,7 +25,7 @@ public class UserEntity {
     @Column(nullable=false)
     private String password;
 
-    @Column(nullable=false,  unique=true)
+    @Column(nullable=false, unique=true)
     private String login;
 
     public UserEntity(UserDTO userDTO) {
