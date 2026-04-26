@@ -27,8 +27,8 @@ public class UserController {
     }
 
     @PutMapping
-    public ResponseEntity<UserDTO> updateUser(@RequestBody ResponseEntity<UserDTO> userDTO) {
-        return userService.updateUser(userDTO);
+    public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO) {
+        return ResponseEntity.ok(userService.updateUser(userDTO));
     }
 
     //http/endereco/user/3 <- Parâmetro

@@ -2,6 +2,7 @@ package com.learning.spring_deep_dive.entity;
 
 
 import com.learning.spring_deep_dive.dto.UserDTO;
+import com.learning.spring_deep_dive.entity.enums.UserStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
@@ -27,6 +28,10 @@ public class UserEntity {
 
     @Column(nullable=false, unique=true)
     private String login;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private UserStatus status;
 
     public UserEntity(UserDTO userDTO) {
         BeanUtils.copyProperties(userDTO,this);

@@ -1,6 +1,7 @@
 package com.learning.spring_deep_dive.dto;
 
 import com.learning.spring_deep_dive.entity.UserEntity;
+import com.learning.spring_deep_dive.entity.enums.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,7 @@ public class UserDTO {
         private String email;
         private String password;
         private String login;
+        private UserStatus status;
 
         public UserDTO(UserEntity userEntity) {
                 BeanUtils.copyProperties(userEntity,this);

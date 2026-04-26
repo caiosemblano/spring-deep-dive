@@ -30,13 +30,24 @@ public class UserService {
         userEntity.setEmail(userDTO.getEmail());
         userEntity.setLogin(userDTO.getLogin());
         userEntity.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        userEntity.setStatus(userDTO.getStatus());
         userRepository.save(userEntity);
     }
 
-    public ResponseEntity<UserDTO> updateUser(ResponseEntity<UserDTO> userDTO) {
-        UserEntity userEntity = new UserEntity(userDTO.getBody());
+    public UserDTO updateUser(UserDTO userDTO) {
+        UserEntity userEntity = userRepository.findById(userDTO.getId())
+                .orElseThrow(() -> new NoSuchElementException("User not found with id: " + userDTO.getId()));
+        
+        userEntity.setName(userDTO.getName());
+        userEntity.setEmail(userDTO.getEmail());
+        userEntity.setLogin(userDTO.getLogin());
+        if (userDTO.getPassword() != null && !userDTO.getPassword().isEmpty()) {
+            userEntity.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        }
+        userEntity.setStatus(userDTO.getStatus());
+        
         userRepository.save(userEntity);
-        return userDTO;
+        return new UserDTO(userEntity);
     }
 
     public void deleteUser(Long id) {
