@@ -13,11 +13,17 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Component
 public class AuthEntryPointJwt implements AuthenticationEntryPoint {
+    private static final Logger logger = LoggerFactory.getLogger(AuthEntryPointJwt.class);
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+        logger.error("Unauthorized error: {} for URI: {}", authException.getMessage(), request.getRequestURI());
+        
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 
@@ -26,6 +32,6 @@ public class AuthEntryPointJwt implements AuthenticationEntryPoint {
         body.put("error", "Unauthorized");
 
         final ObjectMapper mapper = new ObjectMapper();
-        mapper.writeValue(response.getOutputStream(), mapper);
+        mapper.writeValue(response.getOutputStream(), body);
     }
 }
