@@ -35,6 +35,11 @@ public class JwtUtils {
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
     }
 
+    public String getUserNameFromJwtToken(String token) {
+        return Jwts.parser().verifyWith(getSigningKey()).build()
+                .parseClaimsJws(token).getPayload().getSubject();
+    }
+
     public boolean validateJwtToken(String authToken) {
         try {
             Jwts.parser().setSigningKey(getSigningKey()).build().parseClaimsJws(authToken);

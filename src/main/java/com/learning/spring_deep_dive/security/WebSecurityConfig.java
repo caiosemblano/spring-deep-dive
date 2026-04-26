@@ -18,12 +18,20 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
+import com.learning.spring_deep_dive.security.jwt.AuthTokenFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 public class WebSecurityConfig {
     @Autowired
     private AuthEntryPointJwt unauthorizedHandler;
+
+    @Bean
+    public AuthTokenFilter authenticationJwtTokenFilter() {
+        return new AuthTokenFilter();
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -46,6 +54,8 @@ public class WebSecurityConfig {
                     .requestMatchers("/auth/**").permitAll()
                     .requestMatchers("/user", "/user/**").permitAll()
                     .anyRequest().authenticated());
+
+        http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

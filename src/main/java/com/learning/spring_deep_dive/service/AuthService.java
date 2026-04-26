@@ -22,26 +22,19 @@ public class AuthService {
 
 
     public AccessDTO login(AuthenticationDTO authDTO) {
-        try {
-            // Cria mecanismo essencial para o Spring
-            UsernamePasswordAuthenticationToken userAuth =
-                    new UsernamePasswordAuthenticationToken(
-                            authDTO.getUsername(),
-                            authDTO.getPassword());
+        // Cria mecanismo essencial para o Spring
+        UsernamePasswordAuthenticationToken userAuth =
+                new UsernamePasswordAuthenticationToken(
+                        authDTO.getUsername(),
+                        authDTO.getPassword());
 
-            //prepara mecanismo para autenticação
-            Authentication authentication = authenticationManager.authenticate(userAuth);
+        //prepara mecanismo para autenticação
+        Authentication authentication = authenticationManager.authenticate(userAuth);
 
-            UserDetailsImpl userAuthenticate = (UserDetailsImpl) authentication.getPrincipal();
+        UserDetailsImpl userAuthenticate = (UserDetailsImpl) authentication.getPrincipal();
 
-            String token = jwtUtils.generateTokenFromUserDetailsImpl(userAuthenticate);
+        String token = jwtUtils.generateTokenFromUserDetailsImpl(userAuthenticate);
 
-            return new AccessDTO(token);
-
-        } catch (BadCredentialsException e) {
-            //TODO: login ou senha invalido
-        }
-
-        return new AccessDTO("Acesso negado");
+        return new AccessDTO(token);
     }
 }
