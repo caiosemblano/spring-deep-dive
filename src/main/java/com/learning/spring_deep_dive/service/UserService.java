@@ -20,6 +20,9 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private EmailService emailService;
+
     public List<UserDTO> getAllUsers() {
         List<UserEntity> users = userRepository.findAll();
         return users.stream().map(UserDTO::new).toList();
@@ -42,6 +45,9 @@ public class UserService {
         userRepository.save(userEntity);
 
         //TODO - Enviar um email para confirmar conta
+        emailService.sendEmail(userDTO.getEmail(),
+                "New user registered",
+                "You are successfully registered!");
     }
 
     public UserDTO updateUser(UserDTO userDTO) {

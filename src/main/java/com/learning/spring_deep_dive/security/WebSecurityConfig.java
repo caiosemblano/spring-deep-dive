@@ -55,6 +55,7 @@ public class WebSecurityConfig {
                     .requestMatchers(AntPathRequestMatcher.antMatcher("/user/**")).permitAll()
                     .requestMatchers(AntPathRequestMatcher.antMatcher("/user")).permitAll()
                     .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
+                    .requestMatchers(AntPathRequestMatcher.antMatcher("/error")).permitAll()
                     .requestMatchers(AntPathRequestMatcher.antMatcher(org.springframework.http.HttpMethod.OPTIONS, "/**")).permitAll()
                     .anyRequest().authenticated());
 
