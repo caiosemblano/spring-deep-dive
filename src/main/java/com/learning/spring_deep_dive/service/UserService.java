@@ -2,6 +2,7 @@ package com.learning.spring_deep_dive.service;
 
 import com.learning.spring_deep_dive.dto.UserDTO;
 import com.learning.spring_deep_dive.entity.UserEntity;
+import com.learning.spring_deep_dive.entity.enums.UserStatus;
 import com.learning.spring_deep_dive.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +33,15 @@ public class UserService {
         userEntity.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         userEntity.setStatus(userDTO.getStatus());
         userRepository.save(userEntity);
+    }
+
+    public void insertNewUser(UserDTO userDTO) {
+        UserEntity userEntity = new UserEntity(userDTO);
+        userEntity.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        userEntity.setStatus(UserStatus.PENDANT);
+        userRepository.save(userEntity);
+
+        //TODO - Enviar um email para confirmar conta
     }
 
     public UserDTO updateUser(UserDTO userDTO) {

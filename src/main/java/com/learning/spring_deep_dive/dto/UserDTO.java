@@ -13,7 +13,7 @@ import org.springframework.beans.BeanUtils;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDTO {
-        private long id;
+        private Long id;
         private String name;
         private String email;
         private String password;
