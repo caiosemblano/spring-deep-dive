@@ -11,6 +11,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.UUID;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import com.learning.spring_deep_dive.entity.UserVerificationEntity;
+import com.learning.spring_deep_dive.repository.UserVerificationRepository;
 
 @Service
 public class UserService {
@@ -22,6 +27,9 @@ public class UserService {
 
     @Autowired
     private EmailService emailService;
+
+    @Autowired
+    private UserVerificationRepository userVerificationRepository;
 
     public List<UserDTO> getAllUsers() {
         List<UserEntity> users = userRepository.findAll();
@@ -42,12 +50,17 @@ public class UserService {
         UserEntity userEntity = new UserEntity(userDTO);
         userEntity.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         userEntity.setStatus(UserStatus.PENDANT);
-        userRepository.save(userEntity);
+        userEntity = userRepository.save(userEntity);
 
-        //TODO - Enviar um email para confirmar conta
-        emailService.sendEmail(userDTO.getEmail(),
-                "New user registered",
-                "You are successfully registered!");
+        UUID token = UUID.randomUUID();
+        Instant expirationTime = Instant.now().plus(15, ChronoUnit.MINUTES);
+        UserVerificationEntity verificationEntity = new UserVerificationEntity(token, userEntity, expirationTime);
+        userVerificationRepository.save(verificationEntity);
+
+        String subject = "Account Verification";
+        String text = "Please verify your account using this token: " + token.toString() + "\nThis token will expire in 15 minutes.";
+        
+        emailService.sendEmail(userDTO.getEmail(), subject, text);
     }
 
     public UserDTO updateUser(UserDTO userDTO) {
