@@ -51,8 +51,11 @@ public class WebSecurityConfig {
             .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/auth/**").permitAll()
-                    .requestMatchers("/user", "/user/**").permitAll()
+                    .requestMatchers(AntPathRequestMatcher.antMatcher("/auth/**")).permitAll()
+                    .requestMatchers(AntPathRequestMatcher.antMatcher("/user/**")).permitAll()
+                    .requestMatchers(AntPathRequestMatcher.antMatcher("/user")).permitAll()
+                    .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
+                    .requestMatchers(AntPathRequestMatcher.antMatcher(org.springframework.http.HttpMethod.OPTIONS, "/**")).permitAll()
                     .anyRequest().authenticated());
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);

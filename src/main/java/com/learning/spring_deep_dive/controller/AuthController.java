@@ -25,8 +25,9 @@ public class AuthController {
     }
 
     @PostMapping(value = "/newUser")
-    public void newUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<?> newUser(@RequestBody UserDTO userDTO) {
         userService.insertNewUser(userDTO);
+        return ResponseEntity.ok().build();
     }
 
 }
