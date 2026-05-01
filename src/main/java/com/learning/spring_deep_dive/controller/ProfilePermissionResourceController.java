@@ -2,7 +2,7 @@ package com.learning.spring_deep_dive.controller;
 
 import com.learning.spring_deep_dive.dto.ProfilePermissionResourceDTO;
 import com.learning.spring_deep_dive.service.ProfilePermissionResourceService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,9 +11,9 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/profile-permission-resource")
 @CrossOrigin
+@RequiredArgsConstructor
 public class ProfilePermissionResourceController {
-    @Autowired
-    private ProfilePermissionResourceService service;
+    private final ProfilePermissionResourceService service;
 
     @GetMapping
     public List<ProfilePermissionResourceDTO> getAllProfilePermissionResources() {

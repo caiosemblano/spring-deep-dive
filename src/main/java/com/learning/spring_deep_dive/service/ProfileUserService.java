@@ -6,16 +6,15 @@ import com.learning.spring_deep_dive.dto.ResourceDTO;
 import com.learning.spring_deep_dive.entity.ProfileUserEntity;
 import com.learning.spring_deep_dive.entity.ResourceEntity;
 import com.learning.spring_deep_dive.repository.ProfileUserRepository;
-import com.learning.spring_deep_dive.repository.ResourceRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ProfileUserService {
-    @Autowired
-    private ProfileUserRepository profileUserRepository;
+    private final ProfileUserRepository profileUserRepository;
 
     public List<ProfileUserDTO> getAllProfileUsers() {
         List<ProfileUserEntity> profileUser = profileUserRepository.findAll();

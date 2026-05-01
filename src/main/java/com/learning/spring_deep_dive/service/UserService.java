@@ -4,7 +4,7 @@ import com.learning.spring_deep_dive.dto.UserDTO;
 import com.learning.spring_deep_dive.entity.UserEntity;
 import com.learning.spring_deep_dive.entity.enums.UserStatus;
 import com.learning.spring_deep_dive.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,18 +18,12 @@ import com.learning.spring_deep_dive.entity.UserVerificationEntity;
 import com.learning.spring_deep_dive.repository.UserVerificationRepository;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private EmailService emailService;
-
-    @Autowired
-    private UserVerificationRepository userVerificationRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
+    private final UserVerificationRepository userVerificationRepository;
 
     public List<UserDTO> getAllUsers() {
         List<UserEntity> users = userRepository.findAll();

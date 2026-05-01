@@ -5,15 +5,15 @@ import com.learning.spring_deep_dive.dto.ResourceDTO;
 import com.learning.spring_deep_dive.entity.ProfileEntity;
 import com.learning.spring_deep_dive.entity.ResourceEntity;
 import com.learning.spring_deep_dive.repository.ProfileRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ProfileService {
-    @Autowired
-    private ProfileRepository profileRepository;
+    private final ProfileRepository profileRepository;
 
     public List<ProfileDTO> getAllProfiles() {
         List<ProfileEntity> resources = profileRepository.findAll();

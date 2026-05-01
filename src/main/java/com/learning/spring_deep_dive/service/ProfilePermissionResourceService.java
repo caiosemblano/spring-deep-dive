@@ -3,15 +3,15 @@ package com.learning.spring_deep_dive.service;
 import com.learning.spring_deep_dive.dto.ProfilePermissionResourceDTO;
 import com.learning.spring_deep_dive.entity.ProfilePermissionResourceEntity;
 import com.learning.spring_deep_dive.repository.ProfilePermissionResourceRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ProfilePermissionResourceService {
-    @Autowired
-    private ProfilePermissionResourceRepository repository;
+    private final ProfilePermissionResourceRepository repository;
 
     public List<ProfilePermissionResourceDTO> getAllProfilePermissionResources() {
         List<ProfilePermissionResourceEntity> entities = repository.findAll();

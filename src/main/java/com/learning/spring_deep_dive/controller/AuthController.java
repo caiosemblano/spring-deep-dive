@@ -4,20 +4,19 @@ import com.learning.spring_deep_dive.dto.AuthenticationDTO;
 import com.learning.spring_deep_dive.dto.UserDTO;
 import com.learning.spring_deep_dive.service.AuthService;
 import com.learning.spring_deep_dive.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
 @CrossOrigin
+@RequiredArgsConstructor
 public class AuthController {
 
-    @Autowired
-    AuthService authService;
+    private final AuthService authService;
 
-    @Autowired
-    UserService userService;
+    private final UserService userService;
 
     @PostMapping(value = "/login")
     public ResponseEntity<?> login(@RequestBody AuthenticationDTO authDTO) {

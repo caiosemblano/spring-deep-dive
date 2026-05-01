@@ -2,7 +2,7 @@ package com.learning.spring_deep_dive.controller;
 
 import com.learning.spring_deep_dive.dto.ResourceDTO;
 import com.learning.spring_deep_dive.service.ResourceService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,9 +11,9 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/resource")
 @CrossOrigin
+@RequiredArgsConstructor
 public class ResourceController {
-    @Autowired
-    ResourceService resourceService;
+    private final ResourceService resourceService;
 
     @GetMapping
     public List<ResourceDTO> getAllResources() {

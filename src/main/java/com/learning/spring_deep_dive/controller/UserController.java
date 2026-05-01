@@ -2,7 +2,7 @@ package com.learning.spring_deep_dive.controller;
 
 import com.learning.spring_deep_dive.dto.UserDTO;
 import com.learning.spring_deep_dive.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,10 +11,10 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/user")
 @CrossOrigin
+@RequiredArgsConstructor
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @GetMapping
     public List<UserDTO> listAllUsers() {

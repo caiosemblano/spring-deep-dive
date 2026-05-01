@@ -3,7 +3,7 @@ package com.learning.spring_deep_dive.controller;
 
 import com.learning.spring_deep_dive.dto.ProfileUserDTO;
 import com.learning.spring_deep_dive.service.ProfileUserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,9 +12,9 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/profile-user")
 @CrossOrigin
+@RequiredArgsConstructor
 public class ProfileUserController {
-    @Autowired
-    private ProfileUserService profileUserService;
+    private final ProfileUserService profileUserService;
 
 
     @GetMapping
