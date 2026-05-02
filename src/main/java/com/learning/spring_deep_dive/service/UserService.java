@@ -30,17 +30,18 @@ public class UserService {
         return users.stream().map(UserDTO::new).toList();
     }
     
-    public void insertUser(UserDTO userDTO) {
+    public UserDTO insertUser(UserDTO userDTO) {
         UserEntity userEntity = new UserEntity();
         userEntity.setName(userDTO.getName());
         userEntity.setEmail(userDTO.getEmail());
         userEntity.setLogin(userDTO.getLogin());
         userEntity.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         userEntity.setStatus(userDTO.getStatus());
-        userRepository.save(userEntity);
+        UserEntity savedUser = userRepository.save(userEntity);
+        return new UserDTO(savedUser);
     }
 
-    public void insertNewUser(UserDTO userDTO) {
+    public UserDTO insertNewUser(UserDTO userDTO) {
         UserEntity userEntity = new UserEntity(userDTO);
         userEntity.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         userEntity.setStatus(UserStatus.PENDANT);
@@ -55,6 +56,8 @@ public class UserService {
         String text = "Please verify your account using this token: " + token.toString() + "\nThis token will expire in 15 minutes.";
         
         emailService.sendEmail(userDTO.getEmail(), subject, text);
+
+        return new UserDTO(userEntity);
     }
 
     public UserDTO updateUser(UserDTO userDTO) {

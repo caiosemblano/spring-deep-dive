@@ -1,9 +1,7 @@
 package com.learning.spring_deep_dive.service;
 
 import com.learning.spring_deep_dive.dto.ProfileDTO;
-import com.learning.spring_deep_dive.dto.ResourceDTO;
 import com.learning.spring_deep_dive.entity.ProfileEntity;
-import com.learning.spring_deep_dive.entity.ResourceEntity;
 import com.learning.spring_deep_dive.repository.ProfileRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,9 +18,9 @@ public class ProfileService {
         return resources.stream().map(ProfileDTO::new).toList();
     }
 
-    public void insertProfile(ProfileDTO profileDTO) {
+    public ProfileDTO insertProfile(ProfileDTO profileDTO) {
         ProfileEntity profileEntity = new ProfileEntity(profileDTO);
-        profileRepository.save(profileEntity);
+        return new ProfileDTO(profileRepository.save(profileEntity));
     }
 
     public ProfileDTO updateProfile(ProfileDTO profileDTO) {
@@ -31,13 +29,14 @@ public class ProfileService {
     }
 
     public void deleteProfile(Long id) {
-        ProfileEntity profileEntity = profileRepository.findById(id).get();
+        ProfileEntity profileEntity = profileRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Profile not found with id: " + id));
         profileRepository.delete(profileEntity);
     }
 
     public ProfileDTO getProfileById(Long id) {
         ProfileEntity profileEntity = profileRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Resource not found with id: " + id));
+                .orElseThrow(() -> new RuntimeException("Profile not found with id: " + id));
         return new ProfileDTO(profileEntity);
     }
 }

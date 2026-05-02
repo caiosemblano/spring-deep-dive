@@ -3,6 +3,7 @@ package com.learning.spring_deep_dive.controller;
 import com.learning.spring_deep_dive.dto.ProfilePermissionResourceDTO;
 import com.learning.spring_deep_dive.service.ProfilePermissionResourceService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,28 +17,28 @@ public class ProfilePermissionResourceController {
     private final ProfilePermissionResourceService service;
 
     @GetMapping
-    public List<ProfilePermissionResourceDTO> getAllProfilePermissionResources() {
-        return service.getAllProfilePermissionResources();
+    public ResponseEntity<List<ProfilePermissionResourceDTO>> getAllProfilePermissionResources() {
+        return ResponseEntity.ok(service.getAllProfilePermissionResources());
     }
 
     @PostMapping
-    public void createProfilePermissionResource(@RequestBody ProfilePermissionResourceDTO dto) {
-        service.insertProfilePermissionResource(dto);
+    public ResponseEntity<ProfilePermissionResourceDTO> createProfilePermissionResource(@RequestBody ProfilePermissionResourceDTO dto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.insertProfilePermissionResource(dto));
     }
 
     @PutMapping
-    public ProfilePermissionResourceDTO updateProfilePermissionResource(@RequestBody ProfilePermissionResourceDTO dto) {
-        return service.updateProfilePermissionResource(dto);
+    public ResponseEntity<ProfilePermissionResourceDTO> updateProfilePermissionResource(@RequestBody ProfilePermissionResourceDTO dto) {
+        return ResponseEntity.ok(service.updateProfilePermissionResource(dto));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProfilePermissionResource(@PathVariable("id") Long id) {
         service.deleteProfilePermissionResource(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{id}")
-    public ProfilePermissionResourceDTO getProfilePermissionResourceById(@PathVariable("id") Long id) {
-        return service.getProfilePermissionResourceById(id);
+    public ResponseEntity<ProfilePermissionResourceDTO> getProfilePermissionResourceById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(service.getProfilePermissionResourceById(id));
     }
 }

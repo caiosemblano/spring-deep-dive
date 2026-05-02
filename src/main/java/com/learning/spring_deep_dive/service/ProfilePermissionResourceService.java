@@ -18,9 +18,9 @@ public class ProfilePermissionResourceService {
         return entities.stream().map(ProfilePermissionResourceDTO::new).toList();
     }
 
-    public void insertProfilePermissionResource(ProfilePermissionResourceDTO dto) {
+    public ProfilePermissionResourceDTO insertProfilePermissionResource(ProfilePermissionResourceDTO dto) {
         ProfilePermissionResourceEntity entity = new ProfilePermissionResourceEntity(dto);
-        repository.save(entity);
+        return new ProfilePermissionResourceDTO(repository.save(entity));
     }
 
     public ProfilePermissionResourceDTO updateProfilePermissionResource(ProfilePermissionResourceDTO dto) {
@@ -32,7 +32,8 @@ public class ProfilePermissionResourceService {
     }
 
     public void deleteProfilePermissionResource(Long id) {
-        ProfilePermissionResourceEntity entity = repository.findById(id).get();
+        ProfilePermissionResourceEntity entity = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("ProfilePermissionResource not found with id: " + id));
         repository.delete(entity);
     }
 

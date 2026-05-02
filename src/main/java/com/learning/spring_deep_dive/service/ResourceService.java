@@ -18,9 +18,9 @@ public class ResourceService {
         return resources.stream().map(ResourceDTO::new).toList();
     }
 
-    public void insertResource(ResourceDTO resourceDTO) {
+    public ResourceDTO insertResource(ResourceDTO resourceDTO) {
         ResourceEntity resourceEntity = new ResourceEntity(resourceDTO);
-        resourceRepository.save(resourceEntity);
+        return new ResourceDTO(resourceRepository.save(resourceEntity));
     }
 
     public ResourceDTO updateResource(ResourceDTO resourceDTO) {

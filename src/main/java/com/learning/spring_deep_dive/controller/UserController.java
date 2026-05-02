@@ -3,6 +3,7 @@ package com.learning.spring_deep_dive.controller;
 import com.learning.spring_deep_dive.dto.UserDTO;
 import com.learning.spring_deep_dive.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,13 +18,14 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public List<UserDTO> listAllUsers() {
-        return userService.getAllUsers();
+    public ResponseEntity<List<UserDTO>> listAllUsers() {
+        return ResponseEntity.ok(userService.getAllUsers());
     }
 
     @PostMapping
-    public void insertUser(@RequestBody UserDTO userDTO) {
-        userService.insertUser(userDTO);
+    public ResponseEntity<UserDTO> insertUser(@RequestBody UserDTO userDTO) {
+        UserDTO insertedUser = userService.insertUser(userDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(insertedUser);
     }
 
     @PutMapping
@@ -31,15 +33,14 @@ public class UserController {
         return ResponseEntity.ok(userService.updateUser(userDTO));
     }
 
-    //http/endereco/user/3 <- Parâmetro
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable("id") Long id) {
         userService.deleteUser(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{id}")
-    public UserDTO getUserById(@PathVariable("id") Long id) {
-        return userService.getUserById(id);
+    public ResponseEntity<UserDTO> getUserById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(userService.getUserById(id));
     }
 }

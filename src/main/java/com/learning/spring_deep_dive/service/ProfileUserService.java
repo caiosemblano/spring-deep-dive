@@ -21,9 +21,9 @@ public class ProfileUserService {
         return profileUser.stream().map(ProfileUserDTO::new).toList();
     }
 
-    public void insertProfileUser(ProfileUserDTO profileUserDTO) {
+    public ProfileUserDTO insertProfileUser(ProfileUserDTO profileUserDTO) {
         ProfileUserEntity profileUserEntity = new ProfileUserEntity(profileUserDTO);
-        profileUserRepository.save(profileUserEntity);
+        return new ProfileUserDTO(profileUserRepository.save(profileUserEntity));
     }
 
     public ProfileUserDTO updateProfileUser(ProfileUserDTO profileUserDTO) {

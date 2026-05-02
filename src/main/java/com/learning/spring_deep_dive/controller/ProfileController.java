@@ -4,6 +4,7 @@ package com.learning.spring_deep_dive.controller;
 import com.learning.spring_deep_dive.dto.ProfileDTO;
 import com.learning.spring_deep_dive.service.ProfileService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,29 +19,29 @@ public class ProfileController {
 
 
     @GetMapping
-    public List<ProfileDTO> getAllProfiles() {
-        return profileService.getAllProfiles();
+    public ResponseEntity<List<ProfileDTO>> getAllProfiles() {
+        return ResponseEntity.ok(profileService.getAllProfiles());
     }
 
     @PostMapping
-    public void createProfile(@RequestBody ProfileDTO profileDTO) {
-        profileService.insertProfile(profileDTO);
+    public ResponseEntity<ProfileDTO> createProfile(@RequestBody ProfileDTO profileDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(profileService.insertProfile(profileDTO));
     }
 
     @PutMapping
-    public ProfileDTO updateProfile(@RequestBody ProfileDTO profileDTO) {
-        return profileService.updateProfile(profileDTO);
+    public ResponseEntity<ProfileDTO> updateProfile(@RequestBody ProfileDTO profileDTO) {
+        return ResponseEntity.ok(profileService.updateProfile(profileDTO));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProfile(@PathVariable("id") Long id) {
         profileService.deleteProfile(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{id}")
-    public ProfileDTO getProfileById(@PathVariable("id") Long id) {
-        return profileService.getProfileById(id);
+    public ResponseEntity<ProfileDTO> getProfileById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(profileService.getProfileById(id));
     }
 
 

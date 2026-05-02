@@ -4,6 +4,7 @@ package com.learning.spring_deep_dive.controller;
 import com.learning.spring_deep_dive.dto.ProfileUserDTO;
 import com.learning.spring_deep_dive.service.ProfileUserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,29 +19,30 @@ public class ProfileUserController {
 
 
     @GetMapping
-    public List<ProfileUserDTO> getAllProfileUsers() {
-        return profileUserService.getAllProfileUsers();
+    public ResponseEntity<List<ProfileUserDTO>> getAllProfileUsers() {
+        return ResponseEntity.ok(profileUserService.getAllProfileUsers());
     }
 
     @PostMapping
-    public void createProfileUser(@RequestBody ProfileUserDTO profileUserDTO) {
-        profileUserService.insertProfileUser(profileUserDTO);
+    public ResponseEntity<ProfileUserDTO> createProfileUser(@RequestBody ProfileUserDTO profileUserDTO) {
+        ProfileUserDTO createdProfileUser = profileUserService.insertProfileUser(profileUserDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdProfileUser);
     }
 
     @PutMapping
-    public ProfileUserDTO updateProfileUser(@RequestBody ProfileUserDTO profileUserDTO) {
-        return profileUserService.updateProfileUser(profileUserDTO);
+    public ResponseEntity<ProfileUserDTO> updateProfileUser(@RequestBody ProfileUserDTO profileUserDTO) {
+        return ResponseEntity.ok(profileUserService.updateProfileUser(profileUserDTO));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProfileUser(@PathVariable("id") Long id) {
         profileUserService.deleteProfileUser(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{id}")
-    public ProfileUserDTO getProfileUserById(@PathVariable("id") Long id) {
-        return profileUserService.getProfileUserById(id);
+    public ResponseEntity<ProfileUserDTO> getProfileUserById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(profileUserService.getProfileUserById(id));
     }
 
 
