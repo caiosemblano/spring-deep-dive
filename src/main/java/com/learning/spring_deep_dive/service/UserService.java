@@ -5,12 +5,11 @@ import com.learning.spring_deep_dive.entity.UserEntity;
 import com.learning.spring_deep_dive.entity.enums.UserStatus;
 import com.learning.spring_deep_dive.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
+import com.learning.spring_deep_dive.exception.ResourceNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.UUID;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -62,7 +61,7 @@ public class UserService {
 
     public UserDTO updateUser(UserDTO userDTO) {
         UserEntity userEntity = userRepository.findById(userDTO.getId())
-                .orElseThrow(() -> new NoSuchElementException("User not found with id: " + userDTO.getId()));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + userDTO.getId()));
         
         userEntity.setName(userDTO.getName());
         userEntity.setEmail(userDTO.getEmail());
@@ -78,13 +77,13 @@ public class UserService {
 
     public void deleteUser(Long id) {
         UserEntity user = userRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("User not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
         userRepository.delete(user);
     }
 
     public UserDTO getUserById(Long id) {
         UserEntity user = userRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("User not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
         return new UserDTO(user);
     }
 }
