@@ -44,7 +44,7 @@ public class AuthControllerTest {
         mockMvc.perform(post("/auth/newUser")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(userDTO)))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
 
         Optional<UserEntity> userOpt = userRepository.findByLogin(login);
         Assertions.assertTrue(userOpt.isPresent());
